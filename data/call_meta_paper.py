@@ -89,13 +89,14 @@ class PaperCaller:
         
         return True
     
-    def get_papers_by_keyword(self, api_key, keyword, limit=100)->list:
+    def get_papers_by_keyword(self, api_key, keyword, offset="0", limit=100)->list:
         # 論文データ取得用のパラメータ設定
         endpoint = 'https://api.semanticscholar.org/graph/v1/paper/search'
         params = {
             'query': keyword,
             'fields': ','.join(self.fields),
-            'limit': limit
+            'limit': limit,
+            'offset': offset,
         }
         
         # 論文データ取得
@@ -215,12 +216,13 @@ class PaperCaller:
 
         return papers
     
-    def get_reference_papers_ids_by_main_paper_id(self, paperID, api_key, limit=1000):
+    def get_reference_papers_ids_by_main_paper_id(self, paperID, api_key, offset = "0", limit=1000):
         endpoint = 'https://api.semanticscholar.org/graph/v1/paper/{}/references'.format(paperID)
         fields = ("paperId",)
         params = {
             'fields': ','.join(fields),
-            "limit": limit
+            "limit": limit,
+            "offset": offset,
         }
         
         # 論文データ取得
